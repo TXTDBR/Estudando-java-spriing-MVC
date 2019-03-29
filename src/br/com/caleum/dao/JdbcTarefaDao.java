@@ -95,7 +95,7 @@ public class JdbcTarefaDao {
 
 	public Tarefa bucartarefaById(Long id) {
 		try {
-			PreparedStatement stmt = connection.prepareCall("SELECT * FROM tarefas WHERE id=?");
+			PreparedStatement stmt = connection.prepareStatement("SELECT * FROM tarefas WHERE id=?");
 			stmt.setLong(1, id);
 			rs = stmt.executeQuery();
 
@@ -113,6 +113,20 @@ public class JdbcTarefaDao {
 				return null;
 			}
 
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public void finalizar(Long id) {
+		boolean b = true;
+		String sql = "UPDATE tarefas SET finalizado=? WHERE id = ?";
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setBoolean(1, b);
+			stmt.setLong(2, id);
+			stmt.execute();
+			stmt.close();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}

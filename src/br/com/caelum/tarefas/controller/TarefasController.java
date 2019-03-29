@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.caelum.tarefas.Tarefa;
 import br.com.caleum.dao.JdbcTarefaDao;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class TarefasController {
@@ -61,5 +62,12 @@ public class TarefasController {
 		JdbcTarefaDao dao = new JdbcTarefaDao();
 		dao.altera(tarefa);
 		return "redirect:listaTarefas";
+	}
+	
+	@ResponseBody
+	@RequestMapping("finalizaTarefa")
+	public void finalizar(Long id) throws ClassNotFoundException {
+		JdbcTarefaDao dao = new JdbcTarefaDao();
+		dao.finalizar(id); 
 	}
 }
