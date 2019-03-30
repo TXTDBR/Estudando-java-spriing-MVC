@@ -2,13 +2,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
-	<script type="txt/javascript" src="resources/js/jquery-1.8.3.js"></script>
+	<script  src="resources/js/jquery-1.8.3.js"></script>
 </head>
 	<body>
 	<script	type="text/javascript">
 		function finalizaTarefa(id) {
-			$.post("finalizaTarefa", {'id': id}, function()	{
-				$("#tarefa_"+id).html("Finalizado");
+			$.post("finalizaTarefa", {'id': id}, function(resposta)	{
+				$("#tarefa_"+id).html(resposta);
 			});
 		}
 		</script>
@@ -24,12 +24,12 @@
 				<th>Ações</th>
 			</tr>
 			<c:forEach items="${tarefas}" var="tarefa">
-			<tr>
+			<tr id="tarefa_${tarefa.id}">
 				<td>${tarefa.id}</td>
 				<td>${tarefa.descricao}</td>
 				<c:if test="${tarefa.finalizado eq false}">
-					<td id="tarefa_${tarefa.id}">
-					<a href="#" 	onClick="finalizaTarefa(${tarefa.id})">Finalize agora!</a>
+					<td>
+					<a href="#" onClick="finalizaTarefa(${tarefa.id})">Finalize agora!</a>
 					</td>
 				</c:if>
 				<c:if test="${tarefa.finalizado eq true }">
@@ -39,8 +39,8 @@
 					<fmt:formatDate value="${tarefa.dataFinalizacao.time}" pattern="dd/MM/yyyy"/>
 				</td>
 				<td>
-					<a href="removeTarefa?id=${tarefa.id}">remover</a>
-					<a href="mostrarTarefa?id=${tarefa.id}">alterar</a>
+					<a href="removeTarefa?id=${tarefa.id}">Remover</a>
+					<a href="mostrarTarefa?id=${tarefa.id}">Alterar</a>
 				</td>
 			</tr>
 			</c:forEach>	 

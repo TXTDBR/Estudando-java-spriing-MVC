@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -120,11 +121,15 @@ public class JdbcTarefaDao {
 	
 	public void finalizar(Long id) {
 		boolean b = true;
-		String sql = "UPDATE tarefas SET finalizado=? WHERE id = ?";
+		
+		
+		String sql = "UPDATE tarefas SET finalizado=?, dataFinalizacao=? WHERE id = ?";
+		
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setBoolean(1, b);
-			stmt.setLong(2, id);
+			stmt.setDate(2, new Date(Calendar.getInstance().getTimeInMillis()));
+			stmt.setLong(3, id);
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {

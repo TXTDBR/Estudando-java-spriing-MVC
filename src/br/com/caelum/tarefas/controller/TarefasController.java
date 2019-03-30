@@ -1,5 +1,8 @@
 package br.com.caelum.tarefas.controller;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -64,10 +67,12 @@ public class TarefasController {
 		return "redirect:listaTarefas";
 	}
 	
-	@ResponseBody
+	//@ResponseBody
 	@RequestMapping("finalizaTarefa")
-	public void finalizar(Long id) throws ClassNotFoundException {
+	public String finalizar(Long id, Model model) throws ClassNotFoundException {
 		JdbcTarefaDao dao = new JdbcTarefaDao();
 		dao.finalizar(id); 
+		model.addAttribute("tarefa", dao.bucartarefaById(id));
+		return "tarefa/finalizada";
 	}
 }
