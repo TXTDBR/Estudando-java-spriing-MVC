@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.caelum.tarefas.Tarefa;
+import br.com.caelum.tarefas.Usuario;
 import br.com.caleum.dao.JdbcTarefaDao;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -75,4 +77,6 @@ public class TarefasController {
 		model.addAttribute("tarefa", dao.bucartarefaById(id));
 		return "tarefa/finalizada";
 	}
+	
+	
 }

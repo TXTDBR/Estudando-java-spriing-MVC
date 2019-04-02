@@ -11,6 +11,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import br.com.caelum.tarefas.Tarefa;
+import br.com.caelum.tarefas.Usuario;
 import br.com.caleum.jdbc.FabricaDeConexoes;
 
 
@@ -135,5 +136,26 @@ public class JdbcTarefaDao {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
+	}
+	
+	public boolean usuarioExiste (Usuario usuario) {
+		boolean status = false;
+		String sql = "SELECT * FROM usuarios WHERE login=? AND senha=?";
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setString(1, usuario.getLogin());
+			stmt.setString(2, usuario.getSenha());
+			
+			ResultSet rs = stmt.executeQuery();
+			
+			if(rs.next()) {
+				status = true;
+			}
+			stmt.close();
+			return status;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
 	}
 }
