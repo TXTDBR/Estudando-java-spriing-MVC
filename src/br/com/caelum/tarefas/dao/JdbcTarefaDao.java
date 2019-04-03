@@ -1,28 +1,38 @@
-package br.com.caleum.dao;
+package br.com.caelum.tarefas.dao;
 
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import br.com.caelum.tarefas.Tarefa;
 import br.com.caelum.tarefas.Usuario;
-import br.com.caleum.jdbc.FabricaDeConexoes;
 
 
+@Repository
 public class JdbcTarefaDao {
 
 	private Connection connection;
 	private PreparedStatement stmt;
 	private ResultSet rs;
-
-	public JdbcTarefaDao() throws ClassNotFoundException {
-		this.connection = new FabricaDeConexoes().getConnetion();
+	
+	@Autowired
+	public JdbcTarefaDao(DataSource  dataSource) {
+		try {
+			this.connection = dataSource.getConnection();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public void adicionar(Tarefa tarefa) {
